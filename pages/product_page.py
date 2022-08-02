@@ -1,8 +1,23 @@
 from .base_page import BasePage
-from .locators import ProductPageLocators, BasketPageLocators
-import time
+from .locators import ProductPageLocators
 
 class ProductPage(BasePage):
+
+	def solve_quiz_and_get_code(self):
+		alert = self.browser.switch_to.alert
+		x = alert.text.split(" ")[2]
+		answer = str(math.log(abs((12 * math.sin(float(x))))))
+		alert.send_keys(answer)
+		alert.accept()
+		try:
+			alert = self.browser.switch_to.alert
+			alert_text = alert.text
+			print(f"Your code: {alert_text}")
+			alert.accept()
+			return True
+		except NoAlertPresentException:
+			print("No second alert presented")
+			return True
 
 	def product_should_be_added(self):
 		assert self.is_element_present(*ProductPageLocators.MESSAGE), 'Message not found'
@@ -32,9 +47,7 @@ class ProductPage(BasePage):
 	def success_message_disappeared(self):
 		assert self.is_disappeared(*ProductPageLocators.MESSAGE)
 
-	# def go_to_basket_page(self):
-	# 	basket_button = self.browser.find_element(*ProductPageLocators.BASKET_LINK)
-	# 	basket_button.click()
+
 	
 	# def go_to_basket_return_name_and_price(self):
 	# 	name, price = self.get_product_name_and_price_and_check()
@@ -52,5 +65,3 @@ class ProductPage(BasePage):
 	# def should_be_price_the_same(self):
 	# 	self.browser.switch_to.alert
 	# 	print(alert.text)
-
-
