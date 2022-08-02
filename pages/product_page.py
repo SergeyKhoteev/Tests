@@ -1,5 +1,6 @@
 from .base_page import BasePage
 from .locators import ProductPageLocators
+import math
 
 class ProductPage(BasePage):
 
@@ -46,22 +47,3 @@ class ProductPage(BasePage):
 
 	def success_message_disappeared(self):
 		assert self.is_disappeared(*ProductPageLocators.MESSAGE)
-
-
-	
-	# def go_to_basket_return_name_and_price(self):
-	# 	name, price = self.get_product_name_and_price_and_check()
-	# 	self.go_to_basket_page()
-	# 	return name, price
-
-	# def verify_name_and_price_in_basket(self, name, price):
-	# 	basket_name = self.browser.find_element(*BasketPageLocators.BASKET_NAME)
-	# 	basket_name = basket_name.text
-	# 	assert name == basket_name, 'Name differs'
-	# 	basket_price = self.browser.find_element(*BasketPageLocators.BASKET_PRICE)
-	# 	basket_price = basket_price.text
-	# 	assert price == basket_price, 'Price differs'
-
-	# def should_be_price_the_same(self):
-	# 	self.browser.switch_to.alert
-	# 	print(alert.text)
