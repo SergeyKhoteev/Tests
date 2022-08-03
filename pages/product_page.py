@@ -1,4 +1,5 @@
 from .base_page import BasePage
+from selenium.common.exceptions import NoSuchElementException, NoAlertPresentException, TimeoutException
 from .locators import ProductPageLocators
 import math
 
@@ -17,8 +18,7 @@ class ProductPage(BasePage):
 			alert.accept()
 			return True
 		except NoAlertPresentException:
-			print("No second alert presented")
-			return True
+			return False
 
 	def product_should_be_added(self):
 		assert self.is_element_present(*ProductPageLocators.MESSAGE), 'Message not found'

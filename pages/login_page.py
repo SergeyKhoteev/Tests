@@ -1,6 +1,8 @@
 from .base_page import BasePage
 from .locators import LoginPageLocators as LoginPageLocators
 
+import time
+
 
 class LoginPage(BasePage):
 	def should_be_login_page(self):
@@ -17,7 +19,8 @@ class LoginPage(BasePage):
 	def should_be_register_form(self):
 		assert self.is_element_present(*LoginPageLocators.REGISTER_FORM), 'register_form is not presented'
 
-	def register_new_user(self, email, password):
+	def register_new_user(self):
+		email, password = self.generate_email_and_password()
 		email_form = self.browser.find_element(*LoginPageLocators.REGISTER_FORM_EMAIL)
 		email_form.send_keys(email)
 		password_form1 = self.browser.find_element(*LoginPageLocators.REGISTER_FORM_PASSWORD1)
@@ -26,6 +29,11 @@ class LoginPage(BasePage):
 		password_form2.send_keys(password)
 		button = self.browser.find_element(*LoginPageLocators.REGISTER_FORM_BUTTON)
 		button.click()
+
+	def generate_email_and_password(self):
+		email = str(time.time()) + "@fakemail.org"
+		password = str(time.time()) + "@fakemail.org"
+		return email, password
 
 	def should_be_login_success_message(self):
 		assert self.is_element_present(*LoginPageLocators.LOGIN_SUCCESS_MESSAGE), 'No success message. Authorization failed.'
